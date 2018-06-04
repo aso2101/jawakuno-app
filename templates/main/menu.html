@@ -1,0 +1,29 @@
+<header>
+    <span class="content">Text Collections</span>
+</header>
+<ul class="menu">
+    {% for c in main_collections %}
+        <li><a href="{{url_for('.r_collection_semantic', objectId=c.id, semantic=c.label|slugify)}}">{{c.label}}</a></li>
+    {% endfor %}
+</ul>
+{% if collections and collections.parents %}
+<header>
+    <span class="content">Parents</span>
+</header>
+<ul class="menu">
+    {% for parent in collections.parents %}
+        <li><a href="{{url_for('.r_collection_semantic', objectId=parent.id, semantic=parent.label|slugify)}}">{{parent.label}}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% if has_about_route or additional_pages %}
+<header>
+    <span class="content">Project</span>
+</header>
+<ul class="menu">
+    <li><a href="{{url_for(".r_about")}}">About</a></li>
+    {%- for page, page_info in additional_pages.items() %}
+        <li><a href="{{url_for(".r_page", page_id=page)}}">{{page_info["title"]}}</a></li>
+    {% endfor -%}
+</ul>
+{% endif %}
